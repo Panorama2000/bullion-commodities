@@ -1,1 +1,55 @@
+# xrpl.toml for Bullion Commodities
+# Version 1.0 - Dated 01.01.26
+# This file provides metadata for tokens on the XRPL, including icons and website links.
+# Tokens are not redeemable for physical commodities and track price exposure only.
+# All icons are hosted at https://bullion-commodities.onrender.com/images/
 
+[DOMAIN]
+domain = "bullion-commodities.onrender.com"
+
+# ────────────────────────────────────────────────
+# XAU - Gold
+# ────────────────────────────────────────────────
+[[TOKENS]]
+code = "XAU"
+issuer = "rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV"                  # ← Replace with your actual issuer address
+meta.icon = "https://bullion-commodities.onrender.com/images/xau-icon.png"
+meta.url = "https://bullion-commodities.onrender.com/xau"
+
+# ────────────────────────────────────────────────
+# XAG - Silver
+# ────────────────────────────────────────────────
+[[TOKENS]]
+code = "XAG"
+issuer = "rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV"                  # ← Replace with your actual issuer address
+meta.icon = "https://bullion-commodities.onrender.com/images/xag-icon.png"
+meta.url = "https://bullion-commodities.onrender.com/xag"
+
+# ────────────────────────────────────────────────
+# XCU - Copper
+# ────────────────────────────────────────────────
+[[TOKENS]]
+code = "XCU"
+issuer = "rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV"                  # ← Replace with your actual issuer address
+meta.icon = "https://bullion-commodities.onrender.com/images/xcu-icon.png"
+meta.url = "https://bullion-commodities.onrender.com/xcu"
+
+# ────────────────────────────────────────────────
+# XPT - Platinum
+# ────────────────────────────────────────────────
+[[TOKENS]]
+code = "XPT"
+issuer = "rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV"                  # ← Replace with your actual issuer address
+meta.icon = "https://bullion-commodities.onrender.com/images/xpt-icon.png"
+meta.url = "https://bullion-commodities.onrender.com/xpt"
+
+# ────────────────────────────────────────────────
+# XBR - Crude Oil
+# ────────────────────────────────────────────────
+[[TOKENS]]
+code = "XBR"
+issuer = "rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV"                  # ← Replace with your actual issuer address
+meta.icon = "https://bullion-commodities.onrender.com/images/xbr-icon.png"
+meta.url = "https://bullion-commodities.onrender.com/xbr"
+
+# End of tokens
