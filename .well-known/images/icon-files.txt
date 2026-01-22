@@ -1,1 +1,7 @@
-
+These are images for the riple ledger icons
+they are used for the tokens
+xau-icon.png = gold
+xag-icon.png = silver
+xcu-icon.png = copper
+xpt-icon.png = platinum
+xbr-icon.png = crude
