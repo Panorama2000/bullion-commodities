@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="copyright" content="Copyright 2025 © Global Commodity Treasury"> 
 
-	
 <style>
 /* ---- BASIC RESET ---- */
 * 
@@ -108,7 +107,7 @@ footer {
     }
 }
 </style>
-
+<!--==============================================================-->
 <style>
 /* ---- TABLE ---- */
 .table-container {
@@ -274,9 +273,9 @@ tr:hover {
     color: #1e3c72;
 }
 </style>
-
+<!--==============================================================-->
 <style>
-/* ==== DOCUMENT MODALS (White Paper & Warning & Reports) ==== */
+/* ==== DOCUMENT MODALS (White Paper & Warning & Reports & Contact & About) ==== */
 .doc-modal {
     display: none;
     position: fixed;
@@ -286,7 +285,6 @@ tr:hover {
     background: rgba(0,0,0,0.75);
     overflow: auto;
 }
-
 .doc-modal-content {
     background: #fff;
     margin: 20px auto;
@@ -308,7 +306,6 @@ tr:hover {
     color: #999;
     cursor: pointer;
 }
-
 .doc-close:hover { color: #000; }
 
 .doc-modal h2 { 
@@ -325,6 +322,7 @@ tr:hover {
     border-radius: 8px; 
 }
 
+
 .doc-footer-btn {
     background: #0066cc; 
     color: #fff; 
@@ -336,8 +334,23 @@ tr:hover {
     font-size: 0.9rem; 
     transition: 0.2s;
 }
-
 .doc-footer-btn:hover { background: #004a99; }
+
+
+#docWhitepaperModal .doc-modal-content {
+    padding-left: 28px; 
+    padding-right: 28px;
+    font-size: 0.90rem;
+    line-height: 1.5;
+}
+#docWhitepaperModal ul {
+    margin-left: 18px;
+    padding-left: 0;
+}
+#docWhitepaperModal li {
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
 
 #docWarningModal .doc-modal-content {
     padding-left: 28px; 
@@ -345,12 +358,10 @@ tr:hover {
     font-size: 0.90rem;
     line-height: 1.5;
 }
-
 #docWarningModal ul {
     margin-left: 18px;
     padding-left: 0;
 }
-
 #docWarningModal li {
     margin-bottom: 6px;
     line-height: 1.2;
@@ -362,19 +373,66 @@ tr:hover {
     font-size: 0.90rem;
     line-height: 1.5;
 }
-
 #docCurrencyModal ul {
     margin-left: 18px;
     padding-left: 0;
 }
-
 #docCurrencyModal li {
     margin-bottom: 6px;
     line-height: 1.2;
 }
 
+#docAboutModal .doc-modal-content {
+    padding-left: 28px; 
+    padding-right: 28px;
+    font-size: 0.90rem;
+    line-height: 1.5;
+}
+#docAboutModal ul {
+    margin-left: 18px;
+    padding-left: 0;
+}
+#docAboutModal li {
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+
+</style>
+<!--==============================================================-->
+<style>
+/* ==== INFO CONTAINER ==== */
+.info-container {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: 1px solid #0066cc;
+    border-radius: 5px;
+    margin: 4px;
+    padding: 2px;
+}
+
 </style>
 
+<style>
+/* ---- INFO BUTTONS ---- */
+.info-btn {
+    background: #0066cc;
+    color: #fff;
+    border: 2px solid #004999;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: bold;
+    width: 170px;    
+    min-width: 78px;
+}
+
+.info-btn:hover { background: #004999; }
+
+</style>
+<!--==============================================================-->
 <style>
 /* ==== TAB CONTAINER ==== */
 .tabs-container {
@@ -396,7 +454,8 @@ tr:hover {
 .tab-btn {
     flex: 1;
     min-width: 0;
-    padding: 10px 4px;
+	 margin:2px 2px;    
+    padding: 8px 4px;
     font-size: 0.9rem;
     text-align: center;
     white-space: normal;
@@ -412,7 +471,6 @@ tr:hover {
 .tab-btn:hover { 
 	background: #e0e0e0;
 }
-
 
 .tab-btn.active {
     background: #007bff;
@@ -448,7 +506,7 @@ tr:hover {
   	#currencyTable th, #currencyTable td { font-size: 0.85rem; }
 }
 </style>
-
+<!--==============================================================-->
 <style>
 /* ==== CURRENCY SYMBOLS ==== */
 .currency-symbols {
@@ -534,7 +592,7 @@ tr:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 </style>
-
+<!--==============================================================-->
 <style>
 /* ==== PRICE CELL ==== */
 .price-cell {
@@ -568,7 +626,7 @@ tr:hover {
     opacity: 1;
 }
 </style>
-
+<!--==============================================================-->
 <style>
 /* ==== SLOGAN ==== */
 .slogan {
@@ -611,6 +669,22 @@ tr:hover {
     
     <!--<div id="silverPrice">Loading silver price...</div>-->
 
+    <!-- === INFO AND CONTACTS === -->
+    <div class="info-container">
+	<div style="display: flex; gap: 20px; justify-content: center; margin:2px 10px; flex-wrap: wrap; font-size:0.9rem; align-content:center;">
+       <button class="info-btn" onclick="openDocModal('docWhitepaperModal')"><b>White paper</b></button>
+       <button class="info-btn" onclick="openDocModal('docWarningModal')"><b>T&C & Warning</b></button>
+       <button class="info-btn" onclick="openPopup('emailPopup')"><b>Contact Us</b></button>
+       <button class="info-btn" onclick="openDocModal('docCurrencyModal')"><b>Commodity Reports</b></button>
+       <button class="info-btn" onclick="openDocModal('docAboutModal')"><b>About</b></button>
+						      		
+		<!--<p style="cursor: pointer; margin: 0;" onclick="openDocModal('docWhitepaperModal')"><u><b>White paper</b></u></p>
+		<p style="cursor: pointer; margin: 0;" onclick="openDocModal('docWarningModal')"><u><b>T&C & Warning</b></u></p>
+		<p style="cursor: pointer; margin: 0;" onclick="openPopup('emailPopup')"><u><b>Contact Us</b></u></p>
+		<p style="cursor: pointer; margin: 0;" onclick="openDocModal('docCurrencyModal')"><u><b>Commodity Reports</b></u></p>-->		
+	</div>    
+    </div>
+	  
     <!-- === TABS === -->
     <div class="tabs-container">
       <div class="tab-row">
@@ -785,22 +859,57 @@ tr:hover {
                                 
       </div>
     </div> 
+			
+    <!-- === ABOUT MODAL === -->
+    <div id="docAboutModal" class="doc-modal">
+      <div class="doc-modal-content">
+        <span class="doc-close" onclick="closeDocModal('docAboutModal')">&times;</span>
 
+        <h2><b>About and How to</b></h2>
+        <p><strong>Last Updated: 01 January 2026</strong></p>
+
+        <h3><b>Caveat Emptor - Buyer Beware</b></h3>
+        <p>All information is for educational and informational purposes only.</p>        
+        <h3><b>ABOUT.</b></h3>
+
+        <p>This is <strong>not financial advice</strong>.</p>
+        <p>1. DYOR</p>
+        <p>2. XRPL prices are volatile and speculative</p>
+        <p>3. Many commodities are community-issued</p>
+        <p>4. No guarantees of profit</p>
+        <p>5. You are responsible for keys and wallet</p>
+        
+        <hr>
+
+        <h3><b>HOW IT WORKS.</b></h3>
+        <p>Global Commodity Treasury does not:</p>
+        <p>1. Execute trades<br>
+          2. Hold funds<br>
+          3. Collect personal data<br>
+          4. Operate under a financial license
+        </p>
+
+        <p>Trading occurs on XRPL. All trade links go directly to decentralized interfaces.</p>
+
+        <hr>
+
+        <p style="text-align:center;font-style:italic;">
+          <strong>By using this site, you accept full responsibility.</strong>
+        </p>
+
+      </div>
+    </div> 
+			
 	<footer>
 	<div style="display: flex; gap: 20px; justify-content: center; margin:10px 10px; flex-wrap: wrap; font-size:0.9rem; align-content:center;">
 		<p style="font-size:0.9rem;"><b>Global Commodity Treasury | <!--Open Source |-->
 		No Jurisdiction | Trade at Own Risk</b></p>
 	</div>
-	<div style="display: flex; gap: 20px; justify-content: center; margin:10px 10px; flex-wrap: wrap; font-size:0.9rem; align-content:center;">
-		<p style="cursor: pointer; margin: 0;" onclick="openDocModal('docWhitepaperModal')"><u><b>White paper</b></u></p>
-		<p style="cursor: pointer; margin: 0;" onclick="openDocModal('docWarningModal')"><u><b>T&C & Warning</b></u></p>
-		<p style="cursor: pointer; margin: 0;" onclick="openPopup('emailPopup')"><u><b>Contact Us</b></u></p>
-		<p style="cursor: pointer; margin: 0;" onclick="openDocModal('docCurrencyModal')"><u><b>Commodity Reports</b></u></p>		
-	</div>
+
 	<div style="display: flex; gap: 20px; text-align:left; margin: 10px 10px; flex-wrap: wrap; font-size:0.8rem;">    	
 	  	<p>Copyright 2025 Global Commodity Treasury</p>
 	</div>
-	</footer>  	    
+	</footer> 	    
   </div>
 </div>
 
@@ -1033,8 +1142,8 @@ document.addEventListener('DOMContentLoaded', () => {
   updatePrices();           // immediate update
 });
 
-// Then every 60 minutes (3600 seconds = 60 × 60 × 1000 ms)
-setInterval(updatePrices, 60 * 60 * 1000);
+// Then every 4 hours (14400 seconds = 60 × 60 × 4 × 1000 ms)
+setInterval(updatePrices, 14400000);  // 4 hours
 </script>
 
 </html>
