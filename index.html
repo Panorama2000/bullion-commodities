@@ -806,35 +806,6 @@ tr:hover {
 
 
 <!--===ALL JAVA SCRIPTING===-->
-<script>
-const apiKey = "JVL0CINVE6EVIO3T";
-
-async function updateSilverPrice() {
-  try {
-    const url = `https://www.alphavantage.co/query?function=COMMODITY_EXCHANGE_RATE&symbol=XAG/USD&apikey=${apiKey}`;
-    const response = await fetch(url);
-    const data = await response.json();
-
-    const rate = data["Realtime Commodity Exchange Rate"]?.["Exchange Rate"];
-    const time = data["Realtime Commodity Exchange Rate"]?.["Last Refreshed"];
-
-    if (rate) {
-      document.getElementById("silverPrice").innerText =
-        `Silver Spot Price: $${parseFloat(rate).toFixed(2)} USD (Updated: ${time})`;
-    } else {
-      document.getElementById("silverPrice").innerText =
-        "Silver price unavailable.";
-    }
-  } catch (error) {
-    console.error(error);
-    document.getElementById("silverPrice").innerText =
-      "Error fetching silver price.";
-  }
-}
-
-updateSilverPrice();
-setInterval(updateSilverPrice, 60000); // refresh every 60 seconds
-</script>
 
 <script>
 /* ---------- CURRENCY DATA ---------- */
@@ -1002,4 +973,68 @@ window.addEventListener('click', function(e){
         openPopup('confirmationPopup'); // Show confirmation popup
     }
 </script>
+
+			<script>
+/* ---------- LIVE PRICE UPDATER v2 ---------- */
+const API_KEY = 'PASTE_YOUR_REAL_ALPHA_VANTAGE_KEY_HERE'; // &#8592; must be real key
+
+const symbolMap = {
+  "XAU": "GC=F",    // Gold futures
+  "XAG": "SI=F",    // Silver futures
+  "XPT": "PL=F",    // Platinum futures
+  "XCU": "HG=F",    // Copper futures
+  "XBR": "BZ=F"     // Brent crude oil futures
+};
+
+async function getPrice(symbol) {
+  const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const data = await response.json();
+
+  if (data["Global Quote"] && data["Global Quote"]["05. price"]) {
+    return data["Global Quote"]["05. price"];
+  }
+  throw new Error(`No price in response for ${symbol}`);
+}
+
+async function updatePrices() {
+  console.log("Starting price update...");
+  let updatedCount = 0;
+
+  for (let c of currencies) {
+    const symbol = symbolMap[c.code];
+    if (!symbol) continue;
+
+    try {
+      const price = await getPrice(symbol);
+      const formatted = parseFloat(price).toFixed(2);
+      c.lastUSD = `$${formatted}`;
+      console.log(`&#10003; ${c.code} &#8594; ${c.lastUSD}`);
+      updatedCount++;
+    } catch (e) {
+      console.error(`Failed to update ${c.code} (${symbol}): ${e.message}`);
+      // Optional: show last known or error state
+      // c.lastUSD = c.lastUSD + " (update failed)";
+    }
+  }
+
+  console.log(`Price update complete (${updatedCount}/${Object.keys(symbolMap).length} succeeded)`);
+
+  // Re-render only if there's an active tab
+  const activeBtn = document.querySelector('.tab-btn.active');
+  if (activeBtn) {
+    renderGroup(activeBtn.dataset.group);
+  }
+}
+
+// Run once on page load
+document.addEventListener('DOMContentLoaded', () => {
+  updatePrices();           // immediate update
+});
+
+// Then every 2 minutes
+setInterval(updatePrices, 120 * 1000);
+</script>
+
 </html>
