@@ -976,7 +976,7 @@ window.addEventListener('click', function(e){
 
 			<script>
 /* ---------- LIVE PRICE UPDATER v2 ---------- */
-const API_KEY = 'PASTE_YOUR_REAL_ALPHA_VANTAGE_KEY_HERE'; // &#8592; must be real key
+const API_KEY = 'JVL0CINVE6EVIO3T'; // &#8592; must be real key
 
 const symbolMap = {
   "XAU": "GC=F",    // Gold futures
@@ -1033,8 +1033,8 @@ document.addEventListener('DOMContentLoaded', () => {
   updatePrices();           // immediate update
 });
 
-// Then every 2 minutes
-setInterval(updatePrices, 120 * 1000);
+// Then every 60 minutes (3600 seconds = 60 × 60 × 1000 ms)
+setInterval(updatePrices, 60 * 60 * 1000);
 </script>
 
 </html>
