@@ -290,7 +290,7 @@ tr:hover {
     margin: 20px auto;
     padding: 22px;
     width: 90%;
-    max-width: 720px;
+    max-width: 800px;
     border-radius: 12px;
     box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     position: relative;
@@ -385,7 +385,7 @@ tr:hover {
 #docAboutModal .doc-modal-content {
     padding-left: 28px; 
     padding-right: 28px;
-    font-size: 0.90rem;
+    font-size: 0.95rem;
     line-height: 1.5;
 }
 #docAboutModal ul {
@@ -393,6 +393,21 @@ tr:hover {
     padding-left: 0;
 }
 #docAboutModal li {
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+
+#docHowModal .doc-modal-content {
+    padding-left: 28px; 
+    padding-right: 28px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+#docHowModal ul {
+    margin-left: 18px;
+    padding-left: 0;
+}
+#docHowModal li {
     margin-bottom: 6px;
     line-height: 1.2;
 }
@@ -677,7 +692,7 @@ tr:hover {
        <button class="info-btn" onclick="openPopup('emailPopup')"><b>Contact Us</b></button>
        <button class="info-btn" onclick="openDocModal('docCurrencyModal')"><b>Commodity Reports</b></button>
        <button class="info-btn" onclick="openDocModal('docAboutModal')"><b>About</b></button>
-						      		
+       <button class="info-btn" onclick="openDocModal('docHowModal')"><b>How to..</b></button>							      		
 		<!--<p style="cursor: pointer; margin: 0;" onclick="openDocModal('docWhitepaperModal')"><u><b>White paper</b></u></p>
 		<p style="cursor: pointer; margin: 0;" onclick="openDocModal('docWarningModal')"><u><b>T&C & Warning</b></u></p>
 		<p style="cursor: pointer; margin: 0;" onclick="openPopup('emailPopup')"><u><b>Contact Us</b></u></p>
@@ -860,45 +875,110 @@ tr:hover {
       </div>
     </div> 
 			
-    <!-- === ABOUT MODAL === -->
-    <div id="docAboutModal" class="doc-modal">
-      <div class="doc-modal-content">
-        <span class="doc-close" onclick="closeDocModal('docAboutModal')">&times;</span>
+	<!-- === ABOUT MODAL === -->
+	<div id="docAboutModal" class="doc-modal">
+	    <div class="doc-modal-content">
+	        <span class="doc-close" onclick="closeDocModal('docAboutModal')">&times;</span>
+	
+	        <h2><b>About this platform.</b></h2>
+	        <p><strong>Last Updated: 01 January 2026</strong></p>
+	
+	        <h3><b>Caveat Emptor - Buyer Beware</b></h3>
+	        <p>All information is for educational and informational purposes only.</p>        
+	        <p>Imagine gaining exposure to the explosive precious metals bull run - 
+	        without the real-world hassles of buying, storing, insuring, or shipping physical bars or coins.</p> 
+	        <p>Physical silver and gold are at historic highs right now, with spot prices pushing well above $110 - 116/oz for silver (and over $5,200/oz for gold as of January 2026).</p>
+	        <p>Add in dealer premiums, storage fees, insurance, and potential customs/shipping costs, and it's easy to see why many investors seek simpler alternatives.</p>
+	        <p>This site introduces tokenized commodity reserves issued on the <strong>XRP Ledger (XRPL)</strong> - one of the fastest, most energy-efficient, and lowest-fee blockchains available.</p>
+	        <p>All these tokens (e.g., XAG for silver, XAU for gold, and others for platinum, copper, oil) allow you to track and trade price movements in affordable fractions using XRP.</p>
+	        <p><strong>Key Features & Benefits:</strong></p>
+	        <ul>
+	            <li><strong>Pure price exposure</strong> - Tokens are designed to mirror spot market prices (via oracles or market dynamics on the DEX).</li>
+	            <li>No physical delivery, no ownership of actual metal - just synthetic tracking for speculation or hedging.</li>
+	            <li><strong>XRPL-powered trading</strong> - Buy/sell directly on the (DEX) with near-instant settlement (3 - 5 seconds).</li>
+	            <li>tiny fees (~$0.0002 per tx), and full transparency.</li>
+	            <li>No intermediaries, no KYC required for DEX trades.</li>
+	            <li><strong>Fractional & accessible</strong> - Enter with small amounts of XRP. No need for full-ounce purchases or vault storage.</li>
+	            <li><strong>Buyer's choice only</strong> - Everything here is voluntary and at your own risk.</li>
+	            <li>We're simply providing visibility into these XRPL-issued tokens and direct links to trade them on the DEX.</li>
+	            <li> Do your own research (DYOR) - markets are volatile, and past performance isn't indicative of future results.</li>
+	        </ul>
+	        <p><strong>Quick Hypothetical Example (Silver – as of late January 2026):</strong></p>
+	        <p>Current silver spot: &#8776; $114/oz.<br>
+	        XRP price: &#8776; $1.91 USD.<br>
+	        Hypothetical entry:<br>
+	        Track the equivalent of 1 oz of silver exposure for roughly 60 XRP (depending on current DEX pricing,<br>
+	        liquidity, and exact pair - prices fluctuate constantly).</p>
+	        <p>If silver rallies to $130/oz in the coming weeks/months:<br>
+	            &#8594; Your token's tracked value rises accordingly.<br>
+	            &#8594; Sell position &#8594; receive &#8776; 68 XRP (or more/less based on market).<br>
+	            &#8594; Net gain: ~8 XRP (&#8776; $15 USD at current levels), minus minimal XRPL fees and any 1% DEX trade slippage.</p>
 
-        <h2><b>About and How to</b></h2>
-        <p><strong>Last Updated: 01 January 2026</strong></p>
+	        <p>This is a simplified illustration only - real results depend on timing, liquidity, overall market conditions, and trading fees (typically very low on XRPL). 
+	        Gains can go the other way too - prices can drop sharply.</p>
+	        <p><strong>Important Disclaimers:</strong><br>
+	        These tokens track spot prices but do not represent physical ownership or redeemable metal. 
+	        Capacity is limited (building toward backing equivalent to 1000 oz silver initially, for example) - early participants may benefit from lower entry points before any supply constraints or price gaps appear. This is not financial advice. Crypto and commodity markets are highly speculative and volatile. Always trade responsibly and only with funds you can afford to lose.</p>
+	        <p>Explore the table below to see current live-tracked prices and click through to the XRPL DEX for real-time trading. 
+	        Welcome to decentralized commodity exposure - on one of the most efficient ledgers in existence.</p>
+	    </div>
+	</div>    
+ 
+	<div id="docHowModal" class="doc-modal">
+	  <div class="doc-modal-content">
+	    <span class="doc-close" onclick="closeDocModal('docHowModal')">&times;</span>
+	
+	    <h2><strong>How It Works</strong></h2>
+	    <p><strong>Last Updated: 01 January 2026</strong></p>
+	
+	    <h3><strong>Caveat Emptor - Buyer Beware</strong></h3>
+	    <p>All information on this site is provided for informational purposes only. 
+	    This is <strong>not financial advice</strong>.</p>
+	
+	    <h3><strong>How to Get Started</strong></h3>
+	    <p>Trading these tokenized commodities is straightforward and fully on-chain via the XRPL decentralized exchange (DEX). 
+	    Here's the simple process:</p>
+	
+	    <h4>Step1</h4>
+	    <ul>
+	      <li><strong>Explore the Commodities Section</strong><br>
+	        Browse the table and find the token you're interested in (e.g., XAG for silver).<br>
+	        Click the <strong>"Buy/Sell"</strong> button for that token.<br>
+	        This will take you directly to the Ripple Ledger DEX trading platform where the token is on offered against XRP.
+	      </li>
+	    </ul>
 
-        <h3><b>Caveat Emptor - Buyer Beware</b></h3>
-        <p>All information is for educational and informational purposes only.</p>        
-        <h3><b>ABOUT.</b></h3>
-
-        <p>This is <strong>not financial advice</strong>.</p>
-        <p>1. DYOR</p>
-        <p>2. XRPL prices are volatile and speculative</p>
-        <p>3. Many commodities are community-issued</p>
-        <p>4. No guarantees of profit</p>
-        <p>5. You are responsible for keys and wallet</p>
-        
-        <hr>
-
-        <h3><b>HOW IT WORKS.</b></h3>
-        <p>Global Commodity Treasury does not:</p>
-        <p>1. Execute trades<br>
-          2. Hold funds<br>
-          3. Collect personal data<br>
-          4. Operate under a financial license
-        </p>
-
-        <p>Trading occurs on XRPL. All trade links go directly to decentralized interfaces.</p>
-
-        <hr>
-
-        <p style="text-align:center;font-style:italic;">
-          <strong>By using this site, you accept full responsibility.</strong>
-        </p>
-
-      </div>
-    </div> 
+	    <h4>Step2</h4>	    
+	    <ul>
+	     <li><strong>Trade on the DEX</strong><br>
+	        Connect your XRPL-compatible wallet (e.g., Xaman, Ledger, Gem, or any supporting wallet).<br>
+	        Enter the amount of the token (or XRP) you want to swap.<br>
+	        Review the details (price, fees &#8776;0.0002 XRP per tx, any slippage), then confirm the swap.<br>
+	        <strong>Done!</strong> The trade settles in 3 - 5 seconds - fully transparent and on-chain.
+	      </li>
+	    </ul>
+	    
+	    <p>Done: Very simple<br>On the DEX Everything's on-chain, transparent, and self-serve.</p>
+	
+		 <p><strong>Key Points to Remember:</strong></p>
+	    <ul>
+	      <li>Everything is self-serve and decentralized - no intermediaries, no KYC required for basic DEX trading.</li>
+	      <li><strong>High volatility warning:</strong> Prices move sharply in either direction. 
+	      Potential for large gains <strong>or losses</strong>.</li>
+	      <li>Always <strong>Do Your Own Research (DYOR)</strong> and trade only with funds you can afford to lose.</li>
+	      <li>Silver (and other commodities) show strong momentum right now, with global physical shortages widely reported. 
+	      Some analysts expect further upside in the coming months - but no one can predict the market with certainty.</li>
+	    </ul>
+	
+	    <p>All trading occurs directly on the <strong>XRP Ledger (XRPL)</strong>. Trade links lead to trusted decentralized interfaces.</p>
+	
+	    <hr>
+	
+	    <p style="text-align: center; font-style: italic; font-weight: bold;">
+	      By using this site, you accept full responsibility for your actions and decisions.
+	    </p>
+	  </div>
+	</div> 
 			
 	<footer>
 	<div style="display: flex; gap: 20px; justify-content: center; margin:10px 10px; flex-wrap: wrap; font-size:0.9rem; align-content:center;">
