@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Global Commodity Treasury</title>
+<title>Global CommodityTreasury</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="copyright" content="Copyright 2025 © Global Commodity Treasury"> 
 
@@ -154,12 +154,13 @@ tr:hover {
 
 /* Column widths */
 #currencyTable th:nth-child(1), #currencyTable td:nth-child(1) { width: 10%; } /* Flag */
-#currencyTable th:nth-child(2), #currencyTable td:nth-child(2) { width: 35%; } /* Name */
+#currencyTable th:nth-child(2), #currencyTable td:nth-child(2) { width: 20%; } /* Name */
 #currencyTable th:nth-child(3), #currencyTable td:nth-child(3) { width: 10%; } /* Code */
 #currencyTable th:nth-child(4), #currencyTable td:nth-child(4) { width: 10%; } /* Info */
-#currencyTable th:nth-child(5), #currencyTable td:nth-child(5) { width: 20%; } /* Pair */
-#currencyTable th:nth-child(6), #currencyTable td:nth-child(6) { width: 10%; } /* Price */
-#currencyTable th:nth-child(7), #currencyTable td:nth-child(7) { width: 15%; } /* Trade */
+#currencyTable th:nth-child(5), #currencyTable td:nth-child(5) { width: 15%; } /* Pair */
+#currencyTable th:nth-child(6), #currencyTable td:nth-child(6) { width: 15%; } /* Price */
+#currencyTable th:nth-child(7), #currencyTable td:nth-child(7) { width: 10%; } /* Trade */
+#currencyTable th:nth-child(7), #currencyTable td:nth-child(8) { width: 10%; } /* Chart */
 
 #currencyTable td:nth-child(1) {
     text-align: center;
@@ -237,8 +238,10 @@ tr:hover {
     position: absolute;
     top: 15px; right: 20px;
     font-size: 2em;
+    font-weight:bold; //from html side
     cursor: pointer;
     color: #aaa;
+    z-index:10;
 }
 
 .close:hover { color: #000; }
@@ -273,6 +276,52 @@ tr:hover {
     color: #1e3c72;
 }
 </style>
+
+<!--==============================================================-->
+<style>
+.chartmodal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.8);
+  justify-content: center; //from here
+  align-items: center;
+  padding: 20px;
+}
+
+.chartmodal-content {
+  margin: 10px Auto;
+  border: 1px solid #888;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  width:100%; //from here
+  max-width:1100px; 
+  height:90vh; 
+  padding:20px; 
+  position:relative; 
+  overflow-y: auto;
+  overflow:hidden;
+    background: white; //from here same as above
+    color: #333;
+    position: relative;
+}
+
+.chartmodal-title {
+	 margin:0;
+	 padding: 10px 10px;
+	 color:#fff;
+	 font-size:24px;
+	 background:rgba(0,0,0,0.4);
+	 text-align:center;
+	 border-bottom:1px solid #444;
+}
+
+</style>
 <!--==============================================================-->
 <style>
 /* ==== DOCUMENT MODALS (White Paper & Warning & Reports & Contact & About) ==== */
@@ -287,7 +336,7 @@ tr:hover {
 }
 .doc-modal-content {
     background: #fff;
-    margin: 20px auto;
+    margin: 10px auto;
     padding: 22px;
     width: 90%;
     max-width: 800px;
@@ -411,7 +460,6 @@ tr:hover {
     margin-bottom: 6px;
     line-height: 1.2;
 }
-
 </style>
 <!--==============================================================-->
 <style>
@@ -681,8 +729,7 @@ tr:hover {
       </div>
     </div>
     
-    <!--<div id="silverPrice">Loading silver price...</div>-->
-
+ 
     <!-- === INFO AND CONTACTS === -->
     <div class="info-container">
 	<div style="display: flex; gap: 20px; justify-content: center; margin:2px 10px; flex-wrap: wrap; font-size:0.9rem; align-content:center;">
@@ -691,14 +738,14 @@ tr:hover {
        <button class="info-btn" onclick="openPopup('emailPopup')"><b>Contact Us</b></button>
        <button class="info-btn" onclick="openDocModal('docCurrencyModal')"><b>Commodity Reports</b></button>
        <button class="info-btn" onclick="openDocModal('docAboutModal')"><b>About</b></button>
-       <button class="info-btn" onclick="openDocModal('docHowModal')"><b>How to..</b></button>							      		
+       <button class="info-btn" onclick="openDocModal('docHowModal')"><b>How to..</b></button>						      		
 		<!--<p style="cursor: pointer; margin: 0;" onclick="openDocModal('docWhitepaperModal')"><u><b>White paper</b></u></p>
 		<p style="cursor: pointer; margin: 0;" onclick="openDocModal('docWarningModal')"><u><b>T&C & Warning</b></u></p>
 		<p style="cursor: pointer; margin: 0;" onclick="openPopup('emailPopup')"><u><b>Contact Us</b></u></p>
 		<p style="cursor: pointer; margin: 0;" onclick="openDocModal('docCurrencyModal')"><u><b>Commodity Reports</b></u></p>-->		
 	</div>    
     </div>
-	  
+    
     <!-- === TABS === -->
     <div class="tabs-container">
       <div class="tab-row">
@@ -723,6 +770,7 @@ tr:hover {
             <!--<th data-label="Change">24h &#916;</th>-->
             <th data-label="Change">Price/ unit</th>
             <th data-label="Trade">Trade</th>
+            <th data-label="Charts">Charts</th>
           </tr>
         </thead>
         <tbody id="currencyTableBody">
@@ -760,6 +808,19 @@ tr:hover {
       </div>
     </div>
 
+	<!-- === Chart MODAL === -->
+	<div id="ChartModal" class="chartmodal">
+	  <div class="chartmodal-content">
+	  	 <!-- Close button -->
+	    <span class="close"><b>&times;</b></span>
+	    	<!-- NEW: Chart Title -->
+    		<h2 id="chartmodal-title">Chart will continue reloading and updating...</h2>
+	    <!-- Chart container -->
+    	<div id="chartContainer" style="width:100%; height:calc(100% - 35px);border: 1px solid #888;  border-radius: 8px;"></div>
+	  </div>
+	</div>
+	
+
     <!-- === WHITEPAPER MODAL === -->
     <div id="docWhitepaperModal" class="doc-modal">
       <div class="doc-modal-content">
@@ -768,7 +829,7 @@ tr:hover {
         <p><strong>Version 1.0 | 1 January 2026</strong></p>
     		<embed id="docPdfViewer" src="gc-white-paper.pdf" type="application/pdf" width="100%" height="600">
         <p style="text-align:center;margin-top:10px;color:#666;">
-          <em>Download: <a href="gc-white-paper.pdf" download>Save PDF</a></em>
+          <em>Download: <a href="gc-white-paper.pdf" download><u>Save PDF</u></a></em>
         </p>
       </div>
     </div>
@@ -872,8 +933,8 @@ tr:hover {
         <p style="text-align:justify;margin-top:12px;color:#666;"><em><b>Download: Silver Report</b><a href="silver-report.pdf" download><u>&nbsp;&nbsp;Save PDF</u></a></em></p>
                                 
       </div>
-    </div> 
-			
+    </div>
+
 	<!-- === ABOUT MODAL === -->
 	<div id="docAboutModal" class="doc-modal">
 	    <div class="doc-modal-content">
@@ -977,8 +1038,8 @@ tr:hover {
 	      By using this site, you accept full responsibility for your actions and decisions.
 	    </p>
 	  </div>
-	</div> 
-			
+	</div>    
+ 
 	<footer>
 	<div style="display: flex; gap: 20px; justify-content: center; margin:10px 10px; flex-wrap: wrap; font-size:0.9rem; align-content:center;">
 		<p style="font-size:0.9rem;"><b>Global Commodity Treasury | <!--Open Source |-->
@@ -988,181 +1049,14 @@ tr:hover {
 	<div style="display: flex; gap: 20px; text-align:left; margin: 10px 10px; flex-wrap: wrap; font-size:0.8rem;">    	
 	  	<p>Copyright 2025 Global Commodity Treasury</p>
 	</div>
-	</footer> 	    
+	</footer>  	    
+
   </div>
 </div>
 
 
 <!--===ALL JAVA SCRIPTING===-->
-
 <script>
-/* ---------- CURRENCY DATA ---------- */
-const currencies = [
- 	// === COMMODITIES ===
-	{name:"Gold | Coming Soon!",code:" ",issuer:"XAG-rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV",pair:"XAU/XRP",group:"commodities",flag:"gold1.jpeg",map:"https://images.mapsofworld.com/minerals/world-gold-producers.jpg",country:"Global",iso:"Au",iso4217:"XAU",dates:"Ancient - Present",lastUSD:"$5110",backing:"Physical Gold",history:"The eternal store of value. What if nations traded in XAU, not USD?",histValue:1800,endYear:2000,growthRate:0.052,slogan:"Two pounds of wheat for a day's wages, and six pounds of barley for a day's wages, and do not damage the oil and the wine!"},
-	{name:"Silver Reserve",code:"XAG",issuer:"-rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV",pair:"XAG/XRP",group:"commodities",flag:"silver2.jpeg",map:"https://images.mapsofworld.com/minerals/world-silver-producers.jpg",country:"Global",iso:"Ag",iso4217:"XAG",dates:"Ancient - Present",lastUSD:"$115",backing:"Physical Silver",history:"The people's precious metal. Industrial + monetary demand rising.",histValue:20,endYear:2000,growthRate:0.052},
-	{name:"Platinum | Coming Soon!",code:" ",issuer:"XAG-rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV",pair:"XPT/XRP",group:"commodities",flag:"platinum2.jpeg",map:"https://images.mapsofworld.com/minerals/world-platinum-producers.jpg",country:"Global",iso:"Pt",iso4217:"XPT",dates:"1900 - Present",lastUSD:"$2780",backing:"Physical Platinum",history:"Rare, catalytic, green tech fuel. Supply squeezed.",histValue:800,endYear:2000,growthRate:0.052},
-	{name:"Copper | Coming Soon!",code:" ",issuer:"XAG-rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV",pair:"XCU/XRP",group:"commodities",flag:"copper1.jpeg",map:"https://images.mapsofworld.com/minerals/world-copper-producers.jpg",country:"Global",iso:"Cu",iso4217:"XCU",dates:"2025 - Future",lastUSD:"$5.95",backing:"Per Metric Ton",history:"Wires the world. EV boom = copper supercycle?",histValue:6000,endYear:2020,growthRate:0.052},
-	{name:"Crude Oil | Coming Soon!",code:" ",issuer:"XAG-rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV",pair:"XBR/XRP",group:"commodities",flag:"crude1.jpeg",map: "https://images.mapsofworld.com/minerals/world-crude-oil-producers.jpg",country:"Global",iso:"XX",iso4217:"XBR",dates:"1973 - Present",lastUSD:"$68",backing:"Brent Barrel",history:"Energy blood. What if oil traded in XBR, not petrodollars?",histValue:100,endYear:2020,growthRate:0.052}
-];
-
-/* ---------- TOGGLE DETAILS ---------- */
-function toggleDetails(el) {
-  const details = el.nextElementSibling;
-  details.classList.toggle('show');
-  el.textContent = details.classList.contains('show') ? 'Read Less' : 'Read More (Math)';
-}
-</script>
-
-<script>
-/* ---------- TAB SWITCHING ---------- */
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderGroup(btn.dataset.group);   // <-- uses the corrected data-group
-  });
-});
-
-/* ---------- INITIAL LOAD ---------- */
-document.addEventListener('DOMContentLoaded', () => {
-  const active = document.querySelector('.tab-btn.active');
-  if (active) renderGroup(active.dataset.group);
-})
-</script>
-
-<script>
-/* ---------- MODAL & HELPERS ---------- */
-function calcHypothetical(start, years, rate) {
-  const fv = (start *  Math.pow(1 + rate, years)).toFixed(2);
-  const multiplier = (fv / start).toFixed(1);
-  return { fv, multiplier };
-}
-</script>
-
-<script>
-/* ---------- MODAL  ---------- */
-const modal = document.getElementById('infoModal');
-const closeBtn = document.querySelector('#infoModal  .close');
-
-window.openModal = function(idx) {
-  const c = currencies[idx];
-
-  document.getElementById ('modalTitle').textContent = `${c.name} (${c.code})`;
-  document.getElementById('modalFlag').src = c.flag;
-  document.getElementById('modalMap').src = c.map;
-  document.getElementById('modalCountry').textContent =  c.country;
-  document.getElementById('modalCurrency').textContent = c.name;
-  document.getElementById ('modalISO').textContent = c.iso;
-  document.getElementById('modalISO4217').textContent = c.iso4217;
-  document.getElementById('modalDates').textContent = c.dates;
-  document.getElementById ('modalLastUSD').textContent = c.lastUSD;
-  document.getElementById('modalBacking').textContent = c.backing;
-  document.getElementById('modalHistory').textContent = c.history;
-
-  //const years = 2025 - c.endYear;
-  //const hypo =  calcHypothetical(c.histValue, years, c.growthRate);
-
-  //const lostEl = document.getElementById('lostPotential');
-  //lostEl.style.display = 'block';
-  //document.getElementById('modalHypothetical').innerHTML = `~$${hypo.fv} USD  (${hypo.multiplier}x growth)`;
-  //document.getElementById('modalDetails').innerHTML = `Formula: FV = $${c.histValue} x  (1 + ${(c.growthRate*100).toFixed(1)}%)^${years} years<br>Assumes stable growth (no wars/sanctions/corruption etc).`;
-   modal.style.display = 'flex';
-}
-
-// Close modal
-closeBtn.onclick = () => modal.style.display = 'none';
-window.onclick = e => { if  (e.target === modal) modal.style.display = 'none'; }
-</script>
-
-<script>
-/* ---------- RENDER TABLE (UPDATED TO USE LIVE PRICES) ---------- */
-const tbody = document.querySelector('#currencyTable tbody');
-
-function renderGroup(group) {
-  tbody.innerHTML = '';
-  const sloganEl = document.getElementById('tabSlogan');
-
-  const filtered = currencies
-    .filter(c => group === 'all' || c.group === group)
-    .filter(c => !c.hidden);
-
-  // Slogan
-  const withSlogan = filtered.find(c => c.slogan);
-  if (withSlogan && group !== 'all') {
-    sloganEl.textContent = `"${withSlogan.slogan}"`;
-    sloganEl.style.display = 'block';
-  } else {
-    sloganEl.style.display = 'none';
-  }
-
-  filtered.forEach((c) => {
-	const row = document.createElement('tr');
-    row.innerHTML = `
-      <td data-label="Flag"><img src="${c.flag}" alt="${c.code}" class="flag-icon"></td>
-      <td data-label="Name">${c.name}</td>
-      <td data-label="Code">${c.code}</td>
-		<td data-label="Info"><p style="cursor: pointer; margin: 0;" onclick="openModal(${currencies.indexOf(c)})">Info</p></td>
-      <td data-label="Pair">${c.pair}</td>
-      <td data-label="Price">${c.lastUSD}</td>
-      <td data-label="Trade">
-        <a href="https://xpmarket.com/dex/${c.code}${c.issuer}/XRP?trade=market" target="_blank">
-          <button class="btn">Buy/Sell</button>
-        </a>
-      </td>
-    `;
-    tbody.appendChild(row);
-  });
-}
-
-</script>
-
-<script>
-// ---- DOCUMENT MODALS (White Paper & Warning) ----
-function openDocModal(id) {
-  document.getElementById(id).style.display = 'block';
-  document.body.style.overflow = 'hidden';
-}
-function closeDocModal(id) {
-  document.getElementById(id).style.display = 'none';
-  document.body.style.overflow = 'auto';
-}
-
-// click-outside to close
-window.addEventListener('click', function(e){
-  if (e.target.classList.contains('doc-modal')) {
-    e.target.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  }
-})
-</script>
-
-<!--Email popup-->
-<script>
-    function openPopup(id) {
-        document.getElementById(id).style.display = 'block';
-    }
-    function closePopup(id) {
-        document.getElementById(id).style.display = 'none';
-    }
-    function updateCharCount() {
-        const textarea = document.getElementById('emailMessage');
-        const charCount = document.getElementById('charCount');
-        charCount.textContent = `${textarea.value.length}/500 characters`;
-    }
-    function sendEmail(event) {
-        event.preventDefault();
-        const subject = document.getElementById('emailSubject').value;
-        const message = document.getElementById('emailMessage').value;
-        const email = 'panorama.2018@proton.me'; // Replace with your email
-        const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
-        window.location.href = mailtoLink;
-        closePopup('emailPopup');
-        openPopup('confirmationPopup'); // Show confirmation popup
-    }
-</script>
-
-			<script>
 /* ---------- LIVE PRICE UPDATER v2 ---------- */
 const API_KEY = 'JVL0CINVE6EVIO3T'; // &#8592; must be real key
 
@@ -1224,5 +1118,244 @@ document.addEventListener('DOMContentLoaded', () => {
 // Then every 4 hours (14400 seconds = 60 × 60 × 4 × 1000 ms)
 setInterval(updatePrices, 14400000);  // 4 hours
 </script>
+
+<script>
+/* ---------- CURRENCY DATA ---------- */
+const currencies = [
+ 	// === COMMODITIES ===
+	{name:"Gold Reserve",code:"XAU",issuer:"rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV",pair:"XAU/XRP",group:"commodities",flag:"gold1.jpeg",map:"https://images.mapsofworld.com/minerals/world-gold-producers.jpg",country:"Global",iso:"Au",iso4217:"XAU",dates:"Ancient - Present",lastUSD:"$5600/ oz",backing:"Physical Gold",history:"The eternal store of value. What if nations traded in XAU, not USD?",chart:"https://www.tradingview.com/chart/?symbol=OANDA%3AXAUUSD",histValue:1800,endYear:2000,growthRate:0.052,slogan:"Two pounds of wheat for a day's wages, and six pounds of barley for a day's wages, and do not damage the oil and the wine!"},
+	{name:"Silver Reserve",code:"XAG",issuer:"rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV",pair:"XAG/XRP",group:"commodities",flag:"silver2.jpeg",map:"https://images.mapsofworld.com/minerals/world-silver-producers.jpg",country:"Global",iso:"Ag",iso4217:"XAG",dates:"Ancient - Present",lastUSD:"$120/ oz",backing:"Physical Silver",history:"The people's precious metal. Industrial + monetary demand rising.",chart:"https://www.tradingview.com/chart/?symbol=OANDA%3AXAGUSD",histValue:20,endYear:2000,growthRate:0.052},
+	{name:"Platinum Reserve",code:"XPT",issuer:"rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV",pair:"XPT/XRP",group:"commodities",flag:"platinum2.jpeg",map:"https://images.mapsofworld.com/minerals/world-platinum-producers.jpg",country:"Global",iso:"Pt",iso4217:"XPT",dates:"1900 - Present",lastUSD:"$2750/ oz",backing:"Physical Platinum",history:"Rare, catalytic, green tech fuel. Supply squeezed.",chart:"https://www.tradingview.com/chart/?symbol=OANDA%3AXPTUSD",histValue:800,endYear:2000,growthRate:0.052},
+	{name:"Copper Reserve",code:"XCU",issuer:"rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV",pair:"XCU/XRP",group:"commodities",flag:"copper1.jpeg",map:"https://images.mapsofworld.com/minerals/world-copper-producers.jpg",country:"Global",iso:"Cu",iso4217:"XCU",dates:"2025 - Future",lastUSD:"$7/ lbs",backing:"Per Metric Ton",history:"Wires the world. EV boom = copper supercycle?",chart:"https://www.tradingview.com/chart/?symbol=OANDA%3AXCUUSD",histValue:6000,endYear:2020,growthRate:0.052},
+	{name:"Crude Oil Reserve",code:"XBR",issuer:"rDmPjXe7jDVUS6moqWhexTELSPqh4gPdGV",pair:"XBR/XRP",group:"commodities",flag:"crude1.jpeg",map: "https://images.mapsofworld.com/minerals/world-crude-oil-producers.jpg",country:"Global",iso:"XX",iso4217:"XBR",dates:"1973 - Present",lastUSD:"$72/ b",backing:"Brent Barrel",history:"Energy blood. What if oil traded in XRP, not petrodollars?",chart:"https://www.tradingview.com/chart/?symbol=OANDA%3ABCOUSD",histValue:100,endYear:2020,growthRate:0.052}
+];
+</script>
+
+<!--<script>
+/* ---------- TOGGLE DETAILS ---------- */
+function toggleDetails(el) {
+  const details = el.nextElementSibling;
+  details.classList.toggle('show');
+  el.textContent = details.classList.contains('show') ? 'Read Less' : 'Read More (Math)';
+}
+</script>-->
+
+<script>
+/* ---------- TAB SWITCHING ---------- */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderGroup(btn.dataset.group);   // <-- uses the corrected data-group
+  });
+});
+
+/* ---------- INITIAL LOAD ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  const active = document.querySelector('.tab-btn.active');
+  if (active) renderGroup(active.dataset.group);
+})
+</script>
+
+<script>
+/* ---------- MODAL & HELPERS ---------- */
+function calcHypothetical(start, years, rate) {
+  const fv = (start *  Math.pow(1 + rate, years)).toFixed(2);
+  const multiplier = (fv / start).toFixed(1);
+  return { fv, multiplier };
+}
+</script>
+
+<script>
+/* ---------- INFO MODAL  ---------- */
+const modal = document.getElementById('infoModal');
+const closeBtn = document.querySelector('#infoModal  .close');
+
+window.openModal = function(idx) {
+  const c = currencies[idx];
+
+  document.getElementById ('modalTitle').textContent = `${c.name} (${c.code})`;
+  document.getElementById('modalFlag').src = c.flag;
+  document.getElementById('modalMap').src = c.map;
+  document.getElementById('modalCountry').textContent =  c.country;
+  document.getElementById('modalCurrency').textContent = c.name;
+  document.getElementById ('modalISO').textContent = c.iso;
+  document.getElementById('modalISO4217').textContent = c.iso4217;
+  document.getElementById('modalDates').textContent = c.dates;
+  document.getElementById ('modalLastUSD').textContent = c.lastUSD;
+  document.getElementById('modalBacking').textContent = c.backing;
+  document.getElementById('modalHistory').textContent = c.history;
+
+  //const years = 2025 - c.endYear;
+  //const hypo =  calcHypothetical(c.histValue, years, c.growthRate);
+
+  //const lostEl = document.getElementById('lostPotential');
+  //lostEl.style.display = 'block';
+  //document.getElementById('modalHypothetical').innerHTML = `~$${hypo.fv} USD  (${hypo.multiplier}x growth)`;
+  //document.getElementById('modalDetails').innerHTML = `Formula: FV = $${c.histValue} x  (1 + ${(c.growthRate*100).toFixed(1)}%)^${years} years<br>Assumes stable growth (no wars/sanctions/corruption etc).`;
+   modal.style.display = 'flex';
+}
+
+// Close modal
+closeBtn.onclick = () => modal.style.display = 'none';
+window.onclick = e => { if  (e.target === modal) modal.style.display = 'none'; }
+</script>
+
+<script>
+/* ---------- CHART MODAL HANDLER (using official TradingView widget) ---------- */
+function openChartModal(index) {
+  const modal = document.getElementById("ChartModal");
+  const container = document.getElementById("chartContainer");
+  const closeBtn = modal.querySelector(".close");
+
+  if (!currencies[index] || !currencies[index].chart) {
+    container.innerHTML = "<p style='color:red; padding:40px; text-align:center; font-size:18px;'>No chart available.</p>";
+    modal.style.display = "block";
+    return;
+  }
+  
+  // Extract symbol from your chart URL (e.g. "OANDA:XAUUSD")
+  const url = currencies[index].chart;
+  const symbolMatch = url.match(/symbol=([^&]+)/);
+  const symbol = symbolMatch ? decodeURIComponent(symbolMatch[1]) : "OANDA:XAUUSD"; // fallback
+
+  // Clear old content (important to avoid duplicate scripts/widgets)
+  container.innerHTML = '';
+
+  // Create the widget embed structure
+  const widgetDiv = document.createElement("div");
+  widgetDiv.className = "tradingview-widget-container";
+  widgetDiv.style.height = "100%";
+  widgetDiv.style.width = "100%";
+
+  const innerDiv = document.createElement("div");
+  innerDiv.className = "tradingview-widget-container__widget";
+  innerDiv.style.height = "calc(100% - 32px)"; // leaves room for attribution
+  innerDiv.style.width = "100%";
+
+  widgetDiv.appendChild(innerDiv);
+  container.appendChild(widgetDiv);
+
+  // Create and append the config script
+  const script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+  script.async = true;
+  script.innerHTML = JSON.stringify({
+    "autosize": true,
+    "symbol": symbol,
+    "interval": "D",              // Daily bars – change to "60" for 1H, "W" for weekly, etc.
+    "timezone": "Etc/UTC",
+    "theme": "dark",              // or "light"
+    "style": "1",                 // 1 = candles
+    "locale": "en",
+    "enable_publishing": false,
+    "allow_symbol_change": true,  // user can search/change symbol inside chart
+    "calendar": false,
+    "support_host": "https://www.tradingview.com"
+  });
+
+  widgetDiv.appendChild(script);
+
+  modal.style.display = "block";
+
+  // Close logic – clean up to prevent memory leaks/multiple loads
+  function closeModal() {
+    modal.style.display = "none";
+    container.innerHTML = '';  // removes script & widget completely
+  }
+
+  closeBtn.onclick = closeModal;
+
+  // Optional: close on outside click
+  modal.onclick = function(event) {
+    if (event.target === modal) closeModal();
+  };
+}
+</script>
+
+<script>
+/* ---------- RENDER TABLE (UPDATED TO USE LIVE PRICES) ---------- */
+const tbody = document.querySelector('#currencyTable tbody');
+
+function renderGroup(group) {
+  tbody.innerHTML = '';
+  const sloganEl = document.getElementById('tabSlogan');
+
+  const filtered = currencies
+    .filter(c => group === 'all' || c.group === group)
+    .filter(c => !c.hidden);
+
+  // Slogan
+  const withSlogan = filtered.find(c => c.slogan);
+  if (withSlogan && group !== 'all') {
+    sloganEl.textContent = `"${withSlogan.slogan}"`;
+    sloganEl.style.display = 'block';
+  } else {
+    sloganEl.style.display = 'none';
+  }
+
+  filtered.forEach((c) => {
+	const row = document.createElement('tr');
+    row.innerHTML = `
+      <td data-label="Flag"><img src="${c.flag}" alt="${c.code}" class="flag-icon"></td>
+      <td data-label="Name">${c.name}</td>
+      <td data-label="Code">${c.code}</td>
+	   <td data-label="Info"><p style="cursor: pointer; margin: 0;" onclick="openModal(${currencies.indexOf(c)})">Info</p></td>
+      <td data-label="Pair">${c.pair}</td>
+      <td data-label="Price">${c.lastUSD}</td>
+      <td data-label="Trade"><a href="https://xpmarket.com/dex/${c.code}-${c.issuer}/XRP?trade=market" target="_blank"><button class="btn">Buy/Sell</button></a></td>
+	   <td data-label="Chart"><p style="cursor: pointer; margin: 0;" onclick="openChartModal(${currencies.indexOf(c)})">Chart</p></td>   
+    `;
+    tbody.appendChild(row);
+  });
+}
+</script>
+
+<script>
+// ---- DOCUMENT MODALS (White Paper & Warning & About & CurrencyInfo) ----
+function openDocModal(id) {
+  document.getElementById(id).style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closeDocModal(id) {
+  document.getElementById(id).style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+
+// click-outside to close
+window.addEventListener('click', function(e){
+  if (e.target.classList.contains('doc-modal')) {
+    e.target.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+})
+</script>
+
+<!--Email popup-->
+<script>
+    function openPopup(id) {
+        document.getElementById(id).style.display = 'block';
+    }
+    function closePopup(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+    function updateCharCount() {
+        const textarea = document.getElementById('emailMessage');
+        const charCount = document.getElementById('charCount');
+        charCount.textContent = `${textarea.value.length}/500 characters`;
+    }
+    function sendEmail(event) {
+        event.preventDefault();
+        const subject = document.getElementById('emailSubject').value;
+        const message = document.getElementById('emailMessage').value;
+        const email = 'panorama.2018@proton.me'; // Replace with your email
+        const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+        window.location.href = mailtoLink;
+        closePopup('emailPopup');
+        openPopup('confirmationPopup'); // Show confirmation popup
+    }
+</script>
+
 
 </html>
